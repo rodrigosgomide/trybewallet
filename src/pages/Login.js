@@ -1,7 +1,9 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import EmailInput from '../components/EmailInput';
 import PasswordInput from '../components/PasswordInput';
-import SubmitButton from '../components/SubmitButton';
+import ButtonSubmit from '../components/ButtonSubmit';
+import { addEmail } from '../redux/actions/index';
 
 class Login extends React.Component {
   state = {
@@ -11,27 +13,38 @@ class Login extends React.Component {
   };
 
   componentDidUpdate(prevProps, prevState) {
-    const { password } = this.state;
-    if (prevState.password !== password) {
+    const { password, email } = this.state;
+    if (prevState.password !== password || prevState.email !== email) {
       this.setState({ isButtonDisable: this.isButtonDisable() });
     }
   }
 
   isButtonDisable = () => {
-    const { password } = this.state;
+    const { password, email } = this.state;
     const MIN_PASSWORD_LENGTH = 6;
-    return password.length < MIN_PASSWORD_LENGTH;
+    return !(email !== '' && password.length >= MIN_PASSWORD_LENGTH);
   };
 
   handlerEmail = ({ target: { value } }) => {
-    this.setState({ email: value });
+    const validate = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return value.match(validate) ? this.setState({ email: value })
+      : this.setState({ email: '' });
   };
 
   handlerPassword = ({ target: { value } }) => {
     this.setState({ password: value });
   };
 
+  handlerButton = (event) => {
+    event.preventDefault();
+    const { email } = this.state;
+    const { history, dispatch } = this.props;
+    dispatch(addEmail(email));
+    history.push('/carteira');
+  };
+
   render() {
+    const { isButtonDisable } = this.state;
     return (
       <div>
         <form>
@@ -43,8 +56,9 @@ class Login extends React.Component {
             testId="password-input"
             statePassword={ this.handlerPassword }
           />
-          <SubmitButton
-            isDisabled={ this.state.isButtonDisable }
+          <ButtonSubmit
+            isDisabled={ isButtonDisable }
+            handlerButton={ this.handlerButton }
           />
         </form>
       </div>
@@ -52,4 +66,4 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+export default connect()(Login);

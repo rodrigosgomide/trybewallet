@@ -2,15 +2,13 @@
 import { SUCCESS_LOGIN } from '../actions';
 
 const INITIAL_STATE = {
-  user: {
-    email: '', // string que armazena o email da pessoa usuária
-  },
+  email: '', // string que armazena o email da pessoa usuária
 };
 
 function login(state = INITIAL_STATE, action) {
   switch (action.type) {
   case SUCCESS_LOGIN:
-    return { ...state, email: action.payload.email };
+    return { ...state, email: action.payload };
   default:
     return state;
   }

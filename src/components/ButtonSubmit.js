@@ -1,13 +1,14 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 
-export class SubmitButton extends Component {
+export class ButtonSubmit extends Component {
   render() {
-    const { isDisabled } = this.props;
+    const { isDisabled, handlerButton } = this.props;
     return (
       <button
         type="submit"
         disabled={ isDisabled }
+        onClick={ handlerButton }
       >
         Entrar
       </button>
@@ -15,4 +16,4 @@ export class SubmitButton extends Component {
   }
 }
 
-export default SubmitButton;
+export default ButtonSubmit;
