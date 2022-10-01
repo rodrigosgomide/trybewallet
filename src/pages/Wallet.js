@@ -1,9 +1,23 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import Header from '../components/Header';
 
 class Wallet extends React.Component {
   render() {
-    return <div>TrybeWallet</div>;
+    const { email } = this.props;
+    return (
+      <div>
+        <Header
+          userEmail={ email }
+          total={ 0 }
+        />
+      </div>
+    );
   }
 }
 
-export default Wallet;
+function mapStateToProps(state) {
+  return state.user;
+}
+
+export default connect(mapStateToProps)(Wallet);
