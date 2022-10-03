@@ -1,25 +1,86 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Header from '../components/Header';
-import Loading from '../components/Loading';
 import WalletForm from '../components/WalletForm';
-import { fetchWithThunk } from '../redux/actions';
+import { fetchWithThunk,
+  actCurrencyInfoSuccess,
+  actCurrentCurrencyInfoSuccess } from '../redux/actions';
+// import { fetchCurrencyInfo, fatchCurrentCurrencyInfo } from '../services/currencyAPI';
 
 class Wallet extends React.Component {
+  state = {
+    id: null,
+    value: '',
+    description: '',
+    currency: 'USD',
+    method: 'Dinheiro',
+    tag: 'Alimentação',
+  };
+
   componentDidMount() {
     const { dispatch } = this.props;
-    dispatch(fetchWithThunk());
+    dispatch(fetchWithThunk(actCurrencyInfoSuccess));
+    this.expenseId();
   }
 
+  expenseId = () => {
+    const { wallet: { expenses } } = this.props;
+    this.setState({ id: expenses.length });
+  };
+
+  handlerInput = ({ target }) => {
+    this.setState({ [target.id]: target.value });
+  };
+
+  handlerButton = (event) => {
+    event.preventDefault();
+    console.log(this.props);
+    const { dispatch } = this.props;
+    const { id } = this.state;
+    dispatch(fetchWithThunk(
+      actCurrentCurrencyInfoSuccess,
+      this.state,
+    ));
+    this.setState({
+      value: '',
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
+      description: '',
+      id: id + 1,
+    });
+  };
+
+  total = () => {
+    const { wallet: { expenses } } = this.props;
+    return (expenses.reduce((total, atual) => {
+      total += atual.value * atual.exchangeRates[atual.currency].ask;
+      return total;
+    }, 0)).toFixed(2);
+  };
+
   render() {
-    const { user, wallet, isLoading } = this.props;
+    const { user, wallet } = this.props;
+    console.log(wallet);
+    const { value, description } = this.state;
     return (
       <div>
         <Header
           userEmail={ user.email }
-          total={ 0 }
+          total={ this.total() }
         />
-        {isLoading ? <Loading /> : <WalletForm currencies={ wallet.currencies } />}
+        <WalletForm
+          currencies={ wallet.currencies }
+          handlerInput={ this.handlerInput }
+          expenseValue={ value }
+          description={ description }
+        />
+        <button
+          type="submit"
+          onClick={ this.handlerButton }
+        >
+          Adicionar despesa
+        </button>
       </div>
     );
   }
