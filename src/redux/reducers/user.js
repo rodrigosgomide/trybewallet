@@ -5,13 +5,13 @@ const INITIAL_STATE = {
   email: '', // string que armazena o email da pessoa usuária
 };
 
-function login(state = INITIAL_STATE, action) {
+const user = (state = INITIAL_STATE, action) => {
   switch (action.type) {
   case SUCCESS_LOGIN:
     return { ...state, email: action.payload };
   default:
     return state;
   }
-}
+};
 
-export default login;
+export default user;

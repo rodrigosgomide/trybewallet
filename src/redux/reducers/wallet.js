@@ -1,21 +1,33 @@
 // Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
+import { GET_CURRENCY_INFO, CURRENCY_INFO_SUCCESS, CURRENCY_INFO_FAIL } from '../actions';
 
 const INITIAL_STATE = {
-  wallet: {
-    currencies: [], // array de string
-    expenses: [], // array de objetos, com cada objeto tendo as chaves id, value, currency, method, tag, description e exchangeRates
-    editor: false, // valor booleano que indica de uma despesa está sendo editada
-    idToEdit: 0, // valor numérico que armazena o id da despesa que esta sendo editada
-  },
+  currencies: [], // array de string
+  expenses: [], // array de objetos, com cada objeto tendo as chaves id, value, currency, method, tag, description e exchangeRates
+  editor: false, // valor booleano que indica de uma despesa está sendo editada
+  idToEdit: 0, // valor numérico que armazena o id da despesa que esta sendo editada
+  error: null,
+  isLoading: false,
 };
 
-function wallet(state = INITIAL_STATE, action) {
+const wallet = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-  // case SUCCESS_LOGIN:
-  //   return { ...state, email: action.payload.email };
+  case GET_CURRENCY_INFO:
+    return { ...state, isLoading: true };
+  case CURRENCY_INFO_SUCCESS:
+    return { ...state,
+      currencies: Object.keys(action.payload).filter((key) => key !== 'USDT'),
+      isLoading: false,
+      error: null,
+    };
+  case CURRENCY_INFO_FAIL:
+    return { ...state,
+      error: 'Tivemos um problema =/',
+      isLoading: false,
+    };
   default:
     return state;
   }
-}
+};
 
 export default wallet;
