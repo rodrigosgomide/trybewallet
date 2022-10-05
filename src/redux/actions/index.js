@@ -40,10 +40,8 @@ export const fetchWithThunk = (
     return successAction === actCurrencyInfoSuccess ? dispatch(successAction(payload))
       : dispatch(successAction({ ...customPayload,
         exchangeRates: payload,
-        // BRL: payload[`${customPayload.currency}BRL`].ask + customPayload.value,
       }));
   } catch (err) {
-    console.log(err);
     dispatch(actCurrencyInfoFail());
   }
 };

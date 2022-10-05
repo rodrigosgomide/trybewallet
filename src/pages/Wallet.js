@@ -32,9 +32,7 @@ class Wallet extends React.Component {
     this.setState({ [target.id]: target.value });
   };
 
-  handlerButton = (event) => {
-    event.preventDefault();
-    console.log(this.props);
+  handlerButton = () => {
     const { dispatch } = this.props;
     const { id } = this.state;
     dispatch(fetchWithThunk(
@@ -61,7 +59,6 @@ class Wallet extends React.Component {
 
   render() {
     const { user, wallet } = this.props;
-    console.log(wallet);
     const { value, description } = this.state;
     return (
       <div>
