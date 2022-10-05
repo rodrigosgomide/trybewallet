@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 class Table extends Component {
   render() {
-    const { expenses } = this.props;
+    const { expenses, handlerRemoveButton } = this.props;
     return (
       <table>
         <thead>
@@ -46,11 +46,16 @@ class Table extends Component {
               <td>
                 Real
               </td>
-              {/* <td>
-                <button type="submit" onClick={ handlerEditRemoveButton }>
-                  Editar/Excluir
+              <td>
+                <button
+                  data-testid="delete-btn"
+                  value={ expense.id }
+                  type="submit"
+                  onClick={ handlerRemoveButton }
+                >
+                  Excluir
                 </button>
-              </td> */}
+              </td>
             </tr>
           ))}
         </tbody>
@@ -61,6 +66,7 @@ class Table extends Component {
 
 Table.propTypes = {
   expenses: PropTypes.instanceOf(Array).isRequired,
+  handlerRemoveButton: PropTypes.func.isRequired,
 };
 
 export default Table;

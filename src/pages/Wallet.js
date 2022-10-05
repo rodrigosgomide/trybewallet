@@ -6,7 +6,9 @@ import WalletForm from '../components/WalletForm';
 import Table from '../components/Table';
 import { fetchWithThunk,
   actCurrencyInfoSuccess,
-  actCurrentCurrencyInfoSuccess } from '../redux/actions';
+  actCurrentCurrencyInfoSuccess,
+  removeExpense,
+} from '../redux/actions';
 
 class Wallet extends React.Component {
   state = {
@@ -59,7 +61,7 @@ class Wallet extends React.Component {
   };
 
   render() {
-    const { user, wallet } = this.props;
+    const { user, wallet, dispatch } = this.props;
     const { value, description } = this.state;
     return (
       <div>
@@ -81,6 +83,7 @@ class Wallet extends React.Component {
         </button>
         <Table
           expenses={ wallet.expenses }
+          handlerRemoveButton={ ({ target }) => dispatch(removeExpense(target.value)) }
         />
       </div>
     );

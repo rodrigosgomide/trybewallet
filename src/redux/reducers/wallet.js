@@ -3,7 +3,8 @@ import {
   GET_CURRENCY_INFO,
   CURRENCY_INFO_SUCCESS,
   CURRENCY_INFO_FAIL,
-  CURRENT_CURRENCY_INFO_SUCCESS } from '../actions';
+  CURRENT_CURRENCY_INFO_SUCCESS,
+  REMOVE_EXPENSE } from '../actions';
 
 const INITIAL_STATE = {
   currencies: [], // array de string
@@ -32,6 +33,10 @@ const wallet = (state = INITIAL_STATE, action) => {
   case CURRENT_CURRENCY_INFO_SUCCESS:
     return { ...state,
       expenses: [...state.expenses, action.payload],
+    };
+  case REMOVE_EXPENSE:
+    return { ...state,
+      expenses: state.expenses.filter((e) => e.id !== parseInt(action.payload, 10)),
     };
   default:
     return state;
