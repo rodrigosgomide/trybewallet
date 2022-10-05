@@ -16,4 +16,9 @@ class EmailInput extends Component {
   }
 }
 
+EmailInput.propTypes = {
+  testId: PropTypes.string.isRequired,
+  stateEmail: PropTypes.func.isRequired,
+};
+
 export default EmailInput;

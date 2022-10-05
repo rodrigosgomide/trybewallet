@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class WalletForm extends Component {
   render() {
@@ -70,5 +71,12 @@ class WalletForm extends Component {
     );
   }
 }
+
+WalletForm.propTypes = {
+  handlerInput: PropTypes.func.isRequired,
+  expenseValue: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
+  currencies: PropTypes.instanceOf(Array).isRequired,
+};
 
 export default WalletForm;

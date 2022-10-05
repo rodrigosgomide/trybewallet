@@ -18,4 +18,9 @@ class PasswordInput extends Component {
   }
 }
 
+PasswordInput.propTypes = {
+  statePassword: PropTypes.func.isRequired,
+  testId: PropTypes.string.isRequired,
+};
+
 export default PasswordInput;

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import EmailInput from '../components/EmailInput';
 import PasswordInput from '../components/PasswordInput';
@@ -65,5 +66,10 @@ class Login extends React.Component {
     );
   }
 }
+
+Login.propTypes = {
+  history: PropTypes.instanceOf(Object).isRequired,
+  dispatch: PropTypes.func.isRequired,
+};
 
 export default connect()(Login);

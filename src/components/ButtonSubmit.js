@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 
-export class ButtonSubmit extends Component {
+class ButtonSubmit extends Component {
   render() {
     const { isDisabled, handlerButton } = this.props;
     return (
@@ -15,5 +15,10 @@ export class ButtonSubmit extends Component {
     );
   }
 }
+
+ButtonSubmit.propTypes = {
+  isDisabled: PropTypes.bool.isRequired,
+  handlerButton: PropTypes.func.isRequired,
+};
 
 export default ButtonSubmit;
